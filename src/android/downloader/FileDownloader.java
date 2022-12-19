@@ -32,7 +32,14 @@ public class FileDownloader extends Observable {
 
     public File download(String fileUrl, File dir, String basicAuth) throws DownloadFailedException {
 
-        String fileName = fileUrl.substring(fileUrl.lastIndexOf('/') + 1);
+        String fileName = "";
+
+        if (fileUrl.indexOf('?') > 0) {
+            String shortUrl = fileUrl.substring(0, fileUrl.indexOf('?'));
+            fileName = shortUrl.substring(shortUrl.lastIndexOf('/') + 1);
+        } else {
+            fileName = fileUrl.substring(fileUrl.lastIndexOf('/') + 1);
+        }
         File outputFile = new File(dir, fileName);
 
         try {
